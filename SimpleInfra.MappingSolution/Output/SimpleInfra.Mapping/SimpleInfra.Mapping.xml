@@ -9,7 +9,7 @@
             
              <remarks>   Msacli, 22.04.2019. </remarks>
         </member>
-        <member name="M:SimpleInfra.Mapping.SimpleMapper.Map``2(``0)">
+        <member name="M:SimpleInfra.Mapping.SimpleMapper.Map``2(``0,System.Boolean)">
              <summary>   A TSource extension method that maps the given source. </summary>
             
              <remarks>   Msacli, 22.04.2019. </remarks>
@@ -20,7 +20,7 @@
             
              <returns>   A TDest. </returns>
         </member>
-        <member name="M:SimpleInfra.Mapping.SimpleMapper.MapTo``2(``0,``1)">
+        <member name="M:SimpleInfra.Mapping.SimpleMapper.MapTo``2(``0,``1,System.Boolean)">
             <summary>
             Map Property Values to another type instance.
             </summary>

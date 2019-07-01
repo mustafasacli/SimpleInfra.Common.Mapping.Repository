@@ -40,6 +40,23 @@ namespace SimpleInfra.Mapping.TestApp
             Console.WriteLine("Average tick for Maaping: {0}", (double)(tickSum / count));
 
             Console.ReadKey();
+            for (int counter = 0; counter < count; counter++)
+            {
+                worker = new Worker();
+                sw.Start();
+                SimpleMapper.MapTo(student, worker);
+                sw.Stop();
+                tick = sw.ElapsedTicks;
+                tickSum += tick;
+                Console.WriteLine("Elapsed Time(ticks): {0}", tick);
+                PrintPerson(worker);
+                sw.Reset();
+            }
+
+            Console.WriteLine("Total tick for Maaping: {0}", tickSum);
+            Console.WriteLine("Average tick for Maaping: {0}", (double)(tickSum / count));
+
+            Console.ReadKey();
         }
 
         private static void PrintPerson(Person person)

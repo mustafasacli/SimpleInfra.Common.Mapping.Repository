@@ -22,15 +22,19 @@
         ///
         /// <returns>   A TDest. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static TDest Map<TSource, TDest>(TSource source)
+        public static TDest Map<TSource, TDest>(TSource source, bool notUseCache = false)
             where TSource : class
-            where TDest : class
+            where TDest : class, new()
         {
             Type typeDest = typeof(TDest);
             Type typeSource = typeof(TSource);
 
-            var list =
-                SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource) ?? new List<string>();
+            var list = new List<string>();
+            list = (notUseCache ?
+                SimpleTypeHelper.GetSameProperties(typeDest, typeSource)
+                :
+                SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource)) ?? new List<string>();
+
             var dest = Activator.CreateInstance<TDest>();
 
             SetInstanceValues(source, dest, list);
@@ -66,7 +70,7 @@
         /// <typeparam name="TDest">Destination Generic Type</typeparam>
         /// <param name="source">Source generic type instance</param>
         /// <param name="instance">Destination generic type instance</param>
-        public static void MapTo<TSource, TDest>(TSource source, TDest instance)
+        public static void MapTo<TSource, TDest>(TSource source, TDest instance, bool notUseCache = false)
             where TSource : class
             where TDest : class
         {
@@ -78,8 +82,12 @@
 
             Type typeDest = typeof(TDest);
             Type typeSource = typeof(TSource);
-            var list =
-                SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource) ?? new List<string>();
+
+            var list = new List<string>();
+            list = (notUseCache ?
+                SimpleTypeHelper.GetSameProperties(typeDest, typeSource)
+                :
+                SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource)) ?? new List<string>();
 
             SetInstanceValues(source, instance, list);
         }

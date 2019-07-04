@@ -102,5 +102,27 @@ namespace SimpleInfra.Mapping
 
             return list;
         }
+
+        internal static Dictionary<string, string> GetKeyValues(string splitString, char firstDelimiter, char secondDelimiter)
+        {
+            var keyValues = new Dictionary<string, string>();
+
+            if (string.IsNullOrWhiteSpace(splitString))
+                return keyValues;
+
+            var keyVals = splitString.Split(new char[] { firstDelimiter }, StringSplitOptions.RemoveEmptyEntries) ?? new string[] { };
+
+            foreach (var item in keyVals)
+            {
+                var dictItems = item.Split(new char[] { secondDelimiter }, StringSplitOptions.RemoveEmptyEntries) ?? new string[] { };
+
+                if (dictItems.Length != 2)
+                    continue;
+
+                keyValues[dictItems[0]] = dictItems[1];
+            }
+
+            return keyValues;
+        }
     }
 }

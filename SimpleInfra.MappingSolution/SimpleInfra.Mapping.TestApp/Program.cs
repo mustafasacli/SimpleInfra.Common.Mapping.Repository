@@ -40,6 +40,8 @@ namespace SimpleInfra.Mapping.TestApp
             Console.WriteLine("Average tick for Maaping: {0}", (double)(tickSum / count));
 
             Console.ReadKey();
+            tickSum = 0;
+            tick = 0;
             for (int counter = 0; counter < count; counter++)
             {
                 worker = new Worker();

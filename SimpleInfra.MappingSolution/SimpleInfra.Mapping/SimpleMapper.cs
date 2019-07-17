@@ -28,6 +28,9 @@
             where TSource : class
             where TDest : class, new()
         {
+            if (source == null)
+                return null;
+
             Type typeDest = typeof(TDest);
             Type typeSource = typeof(TSource);
 
@@ -104,6 +107,9 @@
             if (string.IsNullOrWhiteSpace(propertyMap))
                 return Map<TSource, TDest>(source, notUseCache: false);
 
+            if (source == null)
+                return null;
+
             Type typeDest = typeof(TDest);
             Type typeSource = typeof(TSource);
             var dictionary = new Dictionary<string, string>();
@@ -138,6 +144,9 @@
                 return MapList<TSource, TDest>(sourceList, notUseCache: false);
 
             var resultList = new List<TDest>();
+
+            if (sourceList == null || sourceList.Count < 1)
+                return resultList;
 
             Type typeDest = typeof(TDest);
             Type typeSource = typeof(TSource);

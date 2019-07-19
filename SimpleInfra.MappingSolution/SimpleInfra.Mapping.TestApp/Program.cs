@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using SimpleInfra.Mapping;
 
 namespace SimpleInfra.Mapping.TestApp
 {

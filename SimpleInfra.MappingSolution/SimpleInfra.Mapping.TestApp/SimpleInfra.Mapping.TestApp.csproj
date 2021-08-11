@@ -34,9 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SimpleInfra.Mapping, Version=2.1.0.0, Culture=neutral, PublicKeyToken=7c9186d61a57495d, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleInfra.Mapping.2.2.0\lib\net45\SimpleInfra.Mapping.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,6 +50,12 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleInfra.Mapping\SimpleInfra.Mapping.csproj">
+      <Project>{4eed135c-ece3-4a87-b834-e5b1cf173fe9}</Project>
+      <Name>SimpleInfra.Mapping</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

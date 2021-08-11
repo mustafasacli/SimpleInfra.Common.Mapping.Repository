@@ -18,10 +18,10 @@ namespace SimpleInfra.Mapping.TestApp
                 Mother = "Elizabeth",
                 BirthDate = new DateTime(1995, 11, 23)
             };
-            var worker = new Worker { };
+            Worker worker;
             Stopwatch sw = new Stopwatch();
 
-            var count = 100000;
+            var count = 100;
             long tick;
             long tickSum = 0;
 
@@ -42,7 +42,6 @@ namespace SimpleInfra.Mapping.TestApp
 
             Console.ReadKey();
             tickSum = 0;
-            tick = 0;
             for (int counter = 0; counter < count; counter++)
             {
                 worker = new Worker();

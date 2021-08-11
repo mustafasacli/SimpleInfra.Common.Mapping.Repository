@@ -7,12 +7,8 @@ namespace SimpleInfra.Mapping
 {
     internal static class SimpleTypeHelper
     {
-        private static ConcurrentDictionary<string, string> dictionary = null;
-
-        static SimpleTypeHelper()
-        {
-            dictionary = new ConcurrentDictionary<string, string>();
-        }
+        private static readonly ConcurrentDictionary<string, string> dictionary =
+            new ConcurrentDictionary<string, string>();
 
         /// <summary>
         /// Gets common Properties of two types.
@@ -22,12 +18,12 @@ namespace SimpleInfra.Mapping
         /// <returns>returns string list</returns>
         internal static List<string> GetSamePropertiesFromDict(Type type1, Type type2)
         {
-            var properties = new List<string>();
+            List<string> properties;
 
             var key1 = string.Format("{0}_{1}", type1.FullName, type2.FullName);
             var key2 = string.Format("{0}_{1}", type2.FullName, type1.FullName);
 
-            var propertiesAsString = string.Empty;
+            string propertiesAsString;
             if (dictionary.TryGetValue(key1, out propertiesAsString))
             {
                 if (string.IsNullOrWhiteSpace(propertiesAsString))
@@ -81,8 +77,8 @@ namespace SimpleInfra.Mapping
         /// <returns>returns string list</returns>
         internal static List<string> GetSameProperties(Type type1, Type type2)
         {
-            var list = new List<string>();
-            var dictionary = new Dictionary<string, Type>();
+            List<string> list;
+            var propertyTypes = new Dictionary<string, Type>();
 
             type1.GetProperties()
                 .Where(q => q.CanRead && q.CanWrite)
@@ -90,13 +86,13 @@ namespace SimpleInfra.Mapping
                 .ForEach(
                 q =>
                 {
-                    dictionary.Add(q.Name, Nullable.GetUnderlyingType(q.PropertyType) ?? q.PropertyType);
+                    propertyTypes.Add(q.Name, Nullable.GetUnderlyingType(q.PropertyType) ?? q.PropertyType);
                 });
 
             list = type2
                 .GetProperties()
-                .Where(q => dictionary.ContainsKey(q.Name) && q.CanRead && q.CanWrite)
-                .Where(q => (Nullable.GetUnderlyingType(q.PropertyType) ?? q.PropertyType) == dictionary[q.Name])
+                .Where(q => propertyTypes.ContainsKey(q.Name) && q.CanRead && q.CanWrite)
+                .Where(q => (Nullable.GetUnderlyingType(q.PropertyType) ?? q.PropertyType) == propertyTypes[q.Name])
                 .Select(q => q.Name)
                 .ToList() ?? new List<string>();
 

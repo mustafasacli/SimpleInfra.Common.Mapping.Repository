@@ -34,8 +34,7 @@
             Type typeDest = typeof(TDest);
             Type typeSource = typeof(TSource);
 
-            var list = new List<string>();
-            list = (notUseCache ?
+            List<string> list = (notUseCache ?
                 SimpleTypeHelper.GetSameProperties(typeDest, typeSource)
                 : SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource)) ?? new List<string>();
 
@@ -70,9 +69,7 @@
             Type typeDest = typeof(TDest);
             Type typeSource = typeof(TSource);
 
-            var list = new List<string>();
-
-            list = (notUseCache ?
+            List<string> list = (notUseCache ?
                 SimpleTypeHelper.GetSameProperties(typeDest, typeSource)
                 : SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource)) ?? new List<string>();
 
@@ -110,12 +107,8 @@
             if (source == null)
                 return null;
 
-            Type typeDest = typeof(TDest);
-            Type typeSource = typeof(TSource);
-            var dictionary = new Dictionary<string, string>();
-
-            dictionary = SimpleTypeHelper.GetKeyValues(propertyMap,
-                InternalAppValues.FirstDelimiter, InternalAppValues.SecondDelimiter) ?? new Dictionary<string, string>();
+            Dictionary<string, string> dictionary = SimpleTypeHelper.GetKeyValues(propertyMap,
+                            InternalAppValues.FirstDelimiter, InternalAppValues.SecondDelimiter) ?? new Dictionary<string, string>();
 
             var dest = Activator.CreateInstance<TDest>();
 
@@ -190,8 +183,7 @@
             Type typeDest = typeof(TDest);
             Type typeSource = typeof(TSource);
 
-            var list = new List<string>();
-            list = (notUseCache ?
+            List<string> list = (notUseCache ?
                 SimpleTypeHelper.GetSameProperties(typeDest, typeSource)
                 : SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource)) ?? new List<string>();
 

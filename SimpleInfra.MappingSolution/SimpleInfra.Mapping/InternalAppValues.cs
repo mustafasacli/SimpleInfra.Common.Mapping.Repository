@@ -1,10 +1,10 @@
 ﻿namespace SimpleInfra.Mapping
 {
-    internal class InternalAppValues
+    internal static class InternalAppValues
     {
-        internal static readonly char JoinChar = ';';
-        internal static readonly string JoinString = ";";
-        internal static readonly char FirstDelimiter = ';';
-        internal static readonly char SecondDelimiter = ':';
+        internal const char JoinChar = ';';
+        internal const string JoinString = ";";
+        internal const char FirstDelimiter = ';';
+        internal const char SecondDelimiter = ':';
     }
 }

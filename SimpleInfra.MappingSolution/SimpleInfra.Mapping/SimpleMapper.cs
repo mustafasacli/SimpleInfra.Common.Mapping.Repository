@@ -1,10 +1,10 @@
-﻿namespace SimpleInfra.Mapping
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Reflection;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
+namespace SimpleInfra.Mapping
+{
     ////////////////////////////////////////////////////////////////////////////////////////////////////
     /// <summary>   A general simple mapper class. </summary>
     ///
@@ -129,7 +129,7 @@
         ///
         /// <returns>   A TDest. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static List<TDest> Map<TSource, TDest>(List<TSource> sourceList, string propertyMap)
+        public static List<TDest> MapList<TSource, TDest>(List<TSource> sourceList, string propertyMap)
             where TSource : class
             where TDest : class, new()
         {

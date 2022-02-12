@@ -260,3 +260,10 @@ paket-files/
 __pycache__/
 *.pyc
 /SimpleInfra.MappingSolution/SimpleInfra.Mapping/nuget.exe
+
+
+/SimpleInfra.MappingSolution/Output/SimpleInfra.Mapping/*.dll
+/SimpleInfra.MappingSolution/Output/SimpleInfra.Mapping/*.pdb
+/SimpleInfra.MappingSolution/Output/SimpleInfra.Mapping.TestApp/*.exe
+/SimpleInfra.MappingSolution/Output/SimpleInfra.Mapping.TestApp/*.dll
+/SimpleInfra.MappingSolution/Output

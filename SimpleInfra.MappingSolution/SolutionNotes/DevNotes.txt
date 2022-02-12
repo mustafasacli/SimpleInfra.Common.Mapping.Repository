@@ -1,0 +1,4 @@
+12.02.2022 Notlar;
+- SimpleMapper.Map<TSource, TDest>(TSource sourceInstance, Function<in TSource, out TDest> mappingFunc);
+şeklinde yapı eklenecek. İlerde bu yapı interface aktarılıp cachelendikten sonra sisteme dahil edilecek.
+- 4.5.1 yükseltilen proje için nuget paketi güncellenecek.

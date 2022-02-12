@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>SimpleInfra.Mapping.TestApp</RootNamespace>
     <AssemblyName>SimpleInfra.Mapping.TestApp</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>

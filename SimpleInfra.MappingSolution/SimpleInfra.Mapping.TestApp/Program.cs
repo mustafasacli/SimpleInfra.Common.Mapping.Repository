@@ -16,7 +16,8 @@ namespace SimpleInfra.Mapping.TestApp
                 Surname = "Azalod",
                 Father = "Douglas",
                 Mother = "Elizabeth",
-                BirthDate = new DateTime(1995, 11, 23)
+                BirthDate = new DateTime(1995, 11, 23),
+                FatherPerson = new Person() { Father = "Jeremy", IdentityNumber = "4095680598", Name = "Douglas", Surname = "Azalod", Mother = "Susan" }
             };
             Worker worker;
             Stopwatch sw = new Stopwatch();
@@ -28,7 +29,7 @@ namespace SimpleInfra.Mapping.TestApp
             for (int counter = 0; counter < count; counter++)
             {
                 sw.Start();
-                var w = SimpleMapper.Map<Student, Worker>(student);
+                var w = SimpleMapper.Map<Student, Worker>(student, useOnlySimpleTypes: false);
                 sw.Stop();
                 tick = sw.ElapsedTicks;
                 tickSum += tick;
@@ -37,8 +38,8 @@ namespace SimpleInfra.Mapping.TestApp
                 sw.Reset();
             }
 
-            Console.WriteLine("Total tick for Maaping: {0}", tickSum);
-            Console.WriteLine("Average tick for Maaping: {0}", (double)(tickSum / count));
+            Console.WriteLine("Total tick for Mapping: {0}", tickSum);
+            Console.WriteLine("Average tick for Mapping: {0}", (double)(tickSum / count));
 
             Console.ReadKey();
             tickSum = 0;
@@ -46,7 +47,7 @@ namespace SimpleInfra.Mapping.TestApp
             {
                 worker = new Worker();
                 sw.Start();
-                SimpleMapper.MapTo(student, worker);
+                SimpleMapper.MapTo(student, worker, useOnlySimpleTypes: false);
                 sw.Stop();
                 tick = sw.ElapsedTicks;
                 tickSum += tick;
@@ -55,8 +56,8 @@ namespace SimpleInfra.Mapping.TestApp
                 sw.Reset();
             }
 
-            Console.WriteLine("Total tick for Maaping: {0}", tickSum);
-            Console.WriteLine("Average tick for Maaping: {0}", (double)(tickSum / count));
+            Console.WriteLine("Total tick for Mapping: {0}", tickSum);
+            Console.WriteLine("Average tick for Mapping: {0}", (double)(tickSum / count));
 
             Console.ReadKey();
         }
@@ -106,6 +107,9 @@ namespace SimpleInfra.Mapping.TestApp
         { get; set; }
 
         public DateTime BirthDate
+        { get; set; }
+
+        public Person FatherPerson
         { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace SimpleInfra.Mapping
         ///
         /// <returns>   A TDest. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static TDest Map<TSource, TDest>(TSource source, bool notUseCache = false)
+        public static TDest Map<TSource, TDest>(TSource source, bool notUseCache = false, bool useOnlySimpleTypes = true)
             where TSource : class
             where TDest : class, new()
         {
@@ -35,8 +35,8 @@ namespace SimpleInfra.Mapping
             Type typeSource = typeof(TSource);
 
             List<string> list = (notUseCache ?
-                SimpleTypeHelper.GetSameProperties(typeDest, typeSource)
-                : SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource)) ?? new List<string>();
+                SimpleTypeHelper.GetSameProperties(typeDest, typeSource, useOnlySimpleTypes)
+                : SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource, useOnlySimpleTypes)) ?? new List<string>();
 
             var dest = Activator.CreateInstance<TDest>();
 
@@ -53,11 +53,12 @@ namespace SimpleInfra.Mapping
         /// <typeparam name="TSource">  Type of the source. </typeparam>
         /// <typeparam name="TDest">    Type of the destination. </typeparam>
         /// <param name="sourceList">   The source List. </param>
-        /// <param name="notUseCache"></param>
+        /// <param name="notUseCache">if it is true Properties will be found by objects, else found by cache.</param>
+        /// <param name="useOnlySimpleTypes">if it is true uses only simple types, else includes complex types(for example class).</param>
         ///
         /// <returns>   A TDest. </returns>
         ////////////////////////////////////////////////////////////////////////////////////////////////////
-        public static List<TDest> MapList<TSource, TDest>(List<TSource> sourceList, bool notUseCache = false)
+        public static List<TDest> MapList<TSource, TDest>(List<TSource> sourceList, bool notUseCache = false, bool useOnlySimpleTypes = true)
             where TSource : class
             where TDest : class, new()
         {
@@ -70,8 +71,8 @@ namespace SimpleInfra.Mapping
             Type typeSource = typeof(TSource);
 
             List<string> list = (notUseCache ?
-                SimpleTypeHelper.GetSameProperties(typeDest, typeSource)
-                : SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource)) ?? new List<string>();
+                SimpleTypeHelper.GetSameProperties(typeDest, typeSource, useOnlySimpleTypes)
+                : SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource, useOnlySimpleTypes)) ?? new List<string>();
 
             sourceList.ForEach(source =>
             {
@@ -168,9 +169,10 @@ namespace SimpleInfra.Mapping
         /// <typeparam name="TDest">Destination Generic Type</typeparam>
         /// <param name="source">Source generic type instance</param>
         /// <param name="instance">Destination generic type instance</param>
-        /// <param name="notUseCache"></param>
+        /// <param name="notUseCache">if it is true Properties will be found by objects, else found by cache.</param>
+        /// <param name="useOnlySimpleTypes">if it is true uses only simple types, else includes complex types(for example class).</param>
         public static void MapTo<TSource, TDest>(TSource source,
-            TDest instance, bool notUseCache = false)
+            TDest instance, bool notUseCache = false, bool useOnlySimpleTypes = true)
             where TSource : class
             where TDest : class
         {
@@ -184,8 +186,8 @@ namespace SimpleInfra.Mapping
             Type typeSource = typeof(TSource);
 
             List<string> list = (notUseCache ?
-                SimpleTypeHelper.GetSameProperties(typeDest, typeSource)
-                : SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource)) ?? new List<string>();
+                SimpleTypeHelper.GetSameProperties(typeDest, typeSource, useOnlySimpleTypes)
+                : SimpleTypeHelper.GetSamePropertiesFromDict(typeDest, typeSource, useOnlySimpleTypes)) ?? new List<string>();
 
             SetInstanceValues(source, instance, list);
         }

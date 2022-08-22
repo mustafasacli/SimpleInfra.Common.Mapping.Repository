@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 
 namespace SimpleInfra.Mapping
 {
@@ -15,8 +16,9 @@ namespace SimpleInfra.Mapping
         /// </summary>
         /// <param name="type1">First type</param>
         /// <param name="type2">Second type</param>
+        /// <param name="useOnlySimpleTypes">if it is true uses only simple types, else includes complex types(for example class).</param>
         /// <returns>returns string list</returns>
-        internal static List<string> GetSamePropertiesFromDict(Type type1, Type type2)
+        internal static List<string> GetSamePropertiesFromDict(Type type1, Type type2, bool useOnlySimpleTypes = true)
         {
             List<string> properties;
 
@@ -28,7 +30,7 @@ namespace SimpleInfra.Mapping
             {
                 if (string.IsNullOrWhiteSpace(propertiesAsString))
                 {
-                    properties = GetSameProperties(type1, type2);
+                    properties = GetSameProperties(type1, type2, useOnlySimpleTypes);
                     propertiesAsString = string.Join(InternalAppValues.JoinString, properties);
                     dictionary[key1] = propertiesAsString;
                     dictionary[key2] = propertiesAsString;
@@ -45,7 +47,7 @@ namespace SimpleInfra.Mapping
             {
                 if (string.IsNullOrWhiteSpace(propertiesAsString))
                 {
-                    properties = GetSameProperties(type1, type2);
+                    properties = GetSameProperties(type1, type2, useOnlySimpleTypes);
                     propertiesAsString = string.Join(InternalAppValues.JoinString, properties);
                     dictionary[key1] = propertiesAsString;
                     dictionary[key2] = propertiesAsString;
@@ -60,7 +62,7 @@ namespace SimpleInfra.Mapping
             }
             else
             {
-                properties = GetSameProperties(type1, type2);
+                properties = GetSameProperties(type1, type2, useOnlySimpleTypes);
                 propertiesAsString = string.Join(InternalAppValues.JoinString, properties);
                 dictionary[key1] = propertiesAsString;
                 dictionary[key2] = propertiesAsString;
@@ -74,14 +76,16 @@ namespace SimpleInfra.Mapping
         /// </summary>
         /// <param name="type1">First type</param>
         /// <param name="type2">Second type</param>
+        /// <param name="useOnlySimpleTypes">if it is true uses only simple types, else includes complex types(for example class).</param>
         /// <returns>returns string list</returns>
-        internal static List<string> GetSameProperties(Type type1, Type type2)
+        internal static List<string> GetSameProperties(Type type1, Type type2, bool useOnlySimpleTypes = true)
         {
             List<string> list;
             var propertyTypes = new Dictionary<string, Type>();
 
             type1.GetProperties()
-                .Where(q => q.CanRead && q.CanWrite)
+                .Where(q => q.CanRead && q.CanWrite &&
+                (!useOnlySimpleTypes || IsSimpleTypeV2(Nullable.GetUnderlyingType(q.PropertyType) ?? q.PropertyType)))
                 .ToList()
                 .ForEach(
                 q =>
@@ -119,6 +123,32 @@ namespace SimpleInfra.Mapping
             }
 
             return keyValues;
+        }
+
+        /// <summary>
+        /// checks type is SimpleType.
+        /// </summary>
+        /// <param name="type">The type to act on.</param>
+        /// <returns>True if it succeeds, false if it fails.</returns>
+        internal static bool IsSimpleTypeV2(this Type type)
+        {
+            return
+                type.IsPrimitive ||
+                new Type[] {
+            typeof(byte[]),
+            typeof(Enum),
+            typeof(string),
+            typeof(decimal),
+            typeof(DateTime),
+            typeof(DateTimeOffset),
+            typeof(TimeSpan),
+            typeof(XmlDocument),
+            typeof(XmlNode),
+            typeof(Guid)
+                }.Contains(type) ||
+                Convert.GetTypeCode(type) != TypeCode.Object ||
+                (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) && IsSimpleTypeV2(type.GetGenericArguments()[0]))
+                ;
         }
     }
 }

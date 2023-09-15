@@ -192,6 +192,22 @@ namespace SimpleInfra.Mapping
             SetInstanceValues(source, instance, list);
         }
 
+        /// <summary>
+        /// Maps classes with static functions.
+        /// </summary>
+        /// <typeparam name="T1">T1 input class</typeparam>
+        /// <typeparam name="T2">T2 out class</typeparam>
+        /// <param name="t1Instance">input class instance</param>
+        /// <param name="mappingFunc">mapping function</param>
+        /// <returns>returns out class instance.</returns>
+        public static T2 MapWith<T1, T2>(this T1 t1Instance, Func<T1, T2> mappingFunc) where T1 : class
+            where T2 : class
+        {
+            // TODO : mapping function could be added to concurrent dictionary.
+            T2 t2Instance = mappingFunc(t1Instance);
+            return t2Instance;
+        }
+
         private static void SetInstanceValues<TSource, TDest>(TSource source, TDest dest,
             List<string> propertyList)
             where TSource : class
